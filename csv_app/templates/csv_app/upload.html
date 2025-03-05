@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload CSV</title>
+</head>
+<body>
+    <h2>Upload CSV File</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+    <h2>Search Products</h2>
+    <input type="text" id="search" placeholder="Enter product name">
+    <div id="results"></div>
+
+    <script>
+        document.getElementById("search").addEventListener("keyup", function() {
+            fetch(`/search/?query=${this.value}`)
+                .then(response => response.json())
+                .then(data => {
+                    let output = "<ul>";
+                    data.forEach(item => {
+                        output += `<li>${item['Product Name']}</li>`;
+                    });
+                    output += "</ul>";
+                    document.getElementById("results").innerHTML = output;
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<input type="text" id="searchBox" placeholder="Search Products">
+<div id="results"></div>
+
+<script>
+document.getElementById("searchBox").addEventListener("input", function() {
+    fetch(`/search?query=${this.value}`)
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("results").innerHTML = JSON.stringify(data.data);
+    });
+});
+</script>
